@@ -1,7 +1,10 @@
+using Case.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<StudentService>();
 
 var app = builder.Build();
 
@@ -22,5 +25,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
 		name: "default",
 		pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+		name: "api",
+		pattern: "api/{controller}/{action}/{id?}");
 
 app.Run();
