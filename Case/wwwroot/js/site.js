@@ -2,6 +2,7 @@
 import { StudentViewComponent } from "./components/student-view.js"
 import { HomeComponent } from "./components/home.js"
 import { html } from "./html.js"
+import { StudentService } from "./services/student-service.js"
 
 const template = html`
 <header>
@@ -54,7 +55,7 @@ window.navigation.addEventListener("navigate", (event) => {
 function loadPageContent(component, path) {
 	root.innerHTML = ""
 	root.appendChild(component.element)
-	setTimeout(() => component.update(path), 0)
+	setTimeout(() => component.onLoad?.(path), 0)
 }
 
 function getPage(path) {
@@ -63,7 +64,7 @@ function getPage(path) {
 	else if (path == "/Home")
 		loadPageContent(new HomeComponent(), path)
 	else if (path.startsWith("/Students"))
-		loadPageContent(new StudentViewComponent(), path)
+		loadPageContent(new StudentViewComponent(new StudentService()), path)
 	else
 		loadPageContent(new HomeComponent(), path)
 }

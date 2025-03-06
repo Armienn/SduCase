@@ -12,13 +12,22 @@ const template = html`
 `
 
 export class StudentViewComponent extends Component {
-	constructor() {
+	constructor(studentService) {
 		super(template)
+		this.studentService = studentService
+	}
+
+	async onLoad(path){
+		const id = +path.split("/").pop()
+		this.student = await this.studentService.get(id)
+		this.onUpdate()
 	}
 
 	onUpdate() {
-		this.l(`cpr`).textContent	= "123456-7890"
-		this.l(`name`).textContent = "Jens Jensen"
-		this.l(`email`).textContent = "aerg@WE"
+		if(!this.student)
+			return
+		this.l(`cpr`).textContent	= this.student.cpr
+		this.l(`name`).textContent = this.student.name
+		this.l(`email`).textContent = this.student.email
 	}
 }
