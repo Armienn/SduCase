@@ -1,6 +1,6 @@
 ﻿"use strict"
-import { Component } from "./component.js"
-import { html } from "./html.js"
+import { Component } from "../component.js"
+import { html } from "../html.js"
 
 const template = html`
 <label>CPR</label>
