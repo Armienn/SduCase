@@ -3,6 +3,7 @@ import { StudentViewComponent } from "./components/student-view.js"
 import { HomeComponent } from "./components/home.js"
 import { html } from "./html.js"
 import { StudentService } from "./services/student-service.js"
+import { StudentListComponent } from "./components/student-list.js"
 
 const template = html`
 <header>
@@ -59,11 +60,14 @@ function loadPageContent(component, path) {
 }
 
 function getPage(path) {
+	path = path.toLowerCase()
 	if (path == "/")
 		loadPageContent(new HomeComponent(), path)
-	else if (path == "/Home")
+	else if (path == "/home")
 		loadPageContent(new HomeComponent(), path)
-	else if (path.startsWith("/Students"))
+	else if (path.startsWith("/students"))
+		loadPageContent(new StudentListComponent(new StudentService()), path)
+	else if (path.startsWith("/student/"))
 		loadPageContent(new StudentViewComponent(new StudentService()), path)
 	else
 		loadPageContent(new HomeComponent(), path)

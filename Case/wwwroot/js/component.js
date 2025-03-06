@@ -17,26 +17,35 @@ export class Component {
 
 	/** Adds a component as the (only) child of the element with the given id*/
 	addChildTo(id, childComponent) {
-		const fullId = id + "-" + rootId
+		const fullId = id + "-" + this.rootId
 		const containerElement = document.getElementById(fullId)
 		if (!containerElement)
 			return console.error(`Element with id ${fullId} not found`)
-		if (this.children[fullId])
-			this.children[fullId].destroy?.()
-		this.children[fullId] = childComponent
-		containerElement.innerHTML = ""
+		if (!this.children[fullId])
+			this.children[fullId] = []
+		this.children[fullId].push(childComponent)
 		containerElement.appendChild(childComponent.element)
+	}
+
+	/** Clears the content of the element of the given id and destroys any child componenets */
+	clear(id) {
+		const fullId = id + "-" + this.rootId
+		document.getElementById(fullId).innerHTML = ""
+		if (!this.children[fullId])
+			return
+		for(const child of this.children[fullId])
+			child.destroy?.()
 	}
 
 	update(){
 		this.onUpdate?.()
-		for(const child of Object.values(this.children))
+		for(const child of Object.values(this.children).flat())
 			child.update?.()
 	}
 
 	destroy() {
 		this.onDestroy?.()
-		for (const child of Object.values(this.children))
+		for (const child of Object.values(this.children).flat())
 			child.destroy?.()
 	}
 }

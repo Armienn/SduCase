@@ -12,6 +12,15 @@ public class StudentService {
 				Email = "jens@mail.dk",
 				Campus = "Næstved",
 				Courses = [new() { Title = "Mat", Grade = "7" }],
+			},
+
+			new Student {
+				Id = 2,
+				Cpr = "123456-7891",
+				Name = "Hanne Hansen",
+				Email = "hanne@mail.dk",
+				Campus = "Næstved",
+				Courses = [new() { Title = "Mat", Grade = "7" }],
 			}
 		];
 	}
