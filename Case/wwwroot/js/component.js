@@ -1,10 +1,11 @@
 "use strict"
 
 export class Component {
-	constructor(template, tag) {
+	constructor(template, tag, classes) {
 		this.rootId = Math.random().toString(36).substring(6)
 		this.template = template.replace(/id="([^"]+)"/g, `id="$1-${this.rootId}"`)
 		this.element = document.createElement(tag || "div")
+		this.element.className = classes || ""
 		this.element.innerHTML = this.template
 		this.children = {}
 		setTimeout(() => this.update(), 0);
@@ -15,7 +16,7 @@ export class Component {
 		return document.getElementById(id + "-" + this.rootId)
 	}
 
-	/** Adds a component as the (only) child of the element with the given id*/
+	/** Adds a component as child of the element with the given id*/
 	addChildTo(id, childComponent) {
 		const fullId = id + "-" + this.rootId
 		const containerElement = document.getElementById(fullId)

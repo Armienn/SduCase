@@ -11,6 +11,7 @@ const template = html`
 			<th id="cpr" scope="col">CPR</th>
 			<th id="name" scope="col">Navn</th>
 			<th id="email" scope="col">E-mail</th>
+			<th id="campus" scope="col">Campus</th>
 		</tr>
 	</thead>
 	<tbody id="student-list">
@@ -38,6 +39,10 @@ export class StudentListComponent extends Component {
 			this.students.sort((a, b) => a.email.localeCompare(b.email))
 			this.onUpdate()
 		}
+		this.l(`campus`).onclick = () => {
+			this.students.sort((a, b) => a.campus.localeCompare(b.campus))
+			this.onUpdate()
+		}	
 		this.onUpdate()
 	}
 
