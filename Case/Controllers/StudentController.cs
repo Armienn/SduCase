@@ -19,7 +19,7 @@ namespace Case.Controllers {
 			return Json(await _studentService.GetAll());
 		}
 
-		public async Task<IActionResult> Get(int id) {
+		public async Task<IActionResult> Get(string id) {
 			return Json(await _studentService.Get(id));
 		}
 
@@ -36,7 +36,7 @@ namespace Case.Controllers {
 		}
 
 		[HttpDelete]
-		public async Task<IActionResult> Delete(int id) {
+		public async Task<IActionResult> Delete(string id) {
 			await _studentService.Delete(id);
 			return Json("success");
 		}

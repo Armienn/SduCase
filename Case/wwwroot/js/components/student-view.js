@@ -48,7 +48,7 @@ export class StudentViewComponent extends Component {
 	}
 
 	async onLoad(path) {
-		const id = +path.split("/").pop()
+		const id = path.split("/").pop()
 		this.student = await this.studentService.get(id)
 		this.onUpdate()
 	}

@@ -1,10 +1,17 @@
+using Case.Models;
 using Case.Services;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<IStudentService>(new TestStudentService());
+
+builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("SduCaseDatabase"));
+
+//builder.Services.AddSingleton<IStudentService>(new TestStudentService());
+//builder.Services.AddSingleton<IStudentService>(new StudentService());
+builder.Services.AddSingleton<IStudentService>(x => new StudentService(x.GetService<IOptions<DatabaseConfiguration>>()));
 
 var app = builder.Build();
 

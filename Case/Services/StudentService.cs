@@ -1,66 +1,39 @@
 ﻿using Case.Models;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 
 namespace Case.Services;
 
 public class StudentService : IStudentService {
-	public async Task<Student[]> GetAll() {
-		return [
-			new Student {
-				Id = 1,
-				Cpr = "123456-7890",
-				Name = "Jens Jensen",
-				Email = "jens@mail.dk",
-				Campus = "Næstved",
-				Courses = [new() { Title = "Mat", Grade = "7" }],
-			},
+	private readonly IMongoCollection<Student> _studentCollection;
 
-			new Student {
-				Id = 2,
-				Cpr = "123456-7891",
-				Name = "Hanne Hansen",
-				Email = "hanne@mail.dk",
-				Campus = "Næstved",
-				Courses = [new() { Title = "Mat", Grade = "7" }],
-			}
-		];
+	public StudentService(
+		IOptions<DatabaseConfiguration> databaseConfiguration
+	) {
+		var mongoClient = new MongoClient(databaseConfiguration.Value.ConnectionString);
+		var mongoDatabase = mongoClient.GetDatabase(databaseConfiguration.Value.DatabaseName);
+		_studentCollection = mongoDatabase.GetCollection<Student>(databaseConfiguration.Value.StudentCollection);
 	}
 
-	public async Task<Student> Get(int id) {
-		return new Student {
-			Id = 1,
-			Cpr = "123456-7890",
-			Name = "Jens Jensen",
-			Email = "jens@mail.dk",
-			Campus = "Næstved",
-			Courses = [new() { Title = "Mat", Grade = "7" }],
-		};
+	public async Task<Student[]> GetAll() {
+		return (await _studentCollection.Find(_ => true).ToListAsync()).ToArray();
+	}
+
+	public async Task<Student?> Get(string id) {
+		return await _studentCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 	}
 
 	public async Task<Student> Add(Student student) {
-		return new Student {
-			Id = 1,
-			Cpr = "123456-7890",
-			Name = "Jens Jensen",
-			Email = "jens@mail.dk",
-			Campus = "Næstved",
-			Courses = [new() { Title = "Mat", Grade = "7" }],
-		};
-		// todo
+		await _studentCollection.InsertOneAsync(student);
+		return student;
 	}
 
-	public async Task<Student> Update(Student student) {
-		return new Student {
-			Id = 1,
-			Cpr = "123456-7890",
-			Name = "Jens Jensen",
-			Email = "jens@mail.dk",
-			Campus = "Næstved",
-			Courses = [new() { Title = "Mat", Grade = "7" }],
-		};
-		// todo
+	public async Task<Student?> Update(Student student) {
+		await _studentCollection.ReplaceOneAsync(x => x.Id == student.Id, student);
+		return student;
 	}
 
-	public async Task Delete(int id) {
-		// todo
+	public async Task Delete(string id) {
+		await _studentCollection.DeleteOneAsync(x => x.Id == id);
 	}
 }
