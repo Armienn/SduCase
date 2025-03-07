@@ -9,9 +9,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<DatabaseConfiguration>(builder.Configuration.GetSection("SduCaseDatabase"));
 
-//builder.Services.AddSingleton<IStudentService>(new TestStudentService());
-//builder.Services.AddSingleton<IStudentService>(new StudentService());
-builder.Services.AddSingleton<IStudentService>(x => new StudentService(x.GetService<IOptions<DatabaseConfiguration>>()));
+// change the commenting below to switch bewteen the test and MongoDB database
+builder.Services.AddSingleton<IStudentService>(new TestStudentService());
+//builder.Services.AddSingleton<IStudentService>(x => new StudentService(x.GetService<IOptions<DatabaseConfiguration>>()));
 
 var app = builder.Build();
 
