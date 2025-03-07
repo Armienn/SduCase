@@ -1,10 +1,10 @@
 "use strict"
 
 export class Component {
-	constructor(template) {
+	constructor(template, tag) {
 		this.rootId = Math.random().toString(36).substring(6)
 		this.template = template.replace(/id="([^"]+)"/g, `id="$1-${this.rootId}"`)
-		this.element = document.createElement("div")
+		this.element = document.createElement(tag || "div")
 		this.element.innerHTML = this.template
 		this.children = {}
 		setTimeout(() => this.update(), 0);

@@ -5,9 +5,17 @@ import { StudentListEntryComponent } from "./student-list-entry.js"
 
 const template = html`
 <h1>Studerende</h1>
-<ul id="student-list">
-	<li><a href="/student/1">Student 1</a></li>
-</ul>
+<table class="table table-striped table-hover">
+	<thead class="thead-dark">
+		<tr>
+			<th id="cpr" scope="col">CPR</th>
+			<th id="name" scope="col">Navn</th>
+			<th id="email" scope="col">E-mail</th>
+		</tr>
+	</thead>
+	<tbody id="student-list">
+	</tbody>
+</table>
 `
 
 export class StudentListComponent extends Component {
@@ -18,6 +26,18 @@ export class StudentListComponent extends Component {
 
 	async onLoad() {
 		this.students = await this.studentService.getAll()
+		this.l(`cpr`).onclick = () => {
+			this.students.sort((a, b) => a.cpr.localeCompare(b.cpr))
+			this.onUpdate()
+		}
+		this.l(`name`).onclick = () => {
+			this.students.sort((a, b) => a.name.localeCompare(b.name))
+			this.onUpdate()
+		}
+		this.l(`email`).onclick = () => {
+			this.students.sort((a, b) => a.email.localeCompare(b.email))
+			this.onUpdate()
+		}
 		this.onUpdate()
 	}
 
