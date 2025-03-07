@@ -2,7 +2,7 @@
 
 namespace Case.Services;
 
-public class StudentService {
+public class StudentService : IStudentService {
 	public async Task<Student[]> GetAll() {
 		return [
 			new Student {

@@ -5,6 +5,7 @@ import { StudentListEntryComponent } from "./student-list-entry.js"
 
 const template = html`
 <h1>Studerende</h1>
+<a href="/student/create" class="btn btn-primary mb-3">Tilføj student</a>
 <table class="table table-striped table-hover">
 	<thead class="thead-dark">
 		<tr>

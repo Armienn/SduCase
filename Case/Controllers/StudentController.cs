@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace Case.Controllers {
 	public class StudentController : Controller {
 		private readonly ILogger<StudentController> _logger;
-		private readonly StudentService _studentService;
+		private readonly IStudentService _studentService;
 
 		public StudentController(
 			ILogger<StudentController> logger,
-			StudentService studentService
+			IStudentService studentService
 		) {
 			_logger = logger;
 			_studentService = studentService;
@@ -25,14 +25,14 @@ namespace Case.Controllers {
 
 		[HttpPost]
 		public async Task<IActionResult> Add([FromBody] Student model) {
-			await _studentService.Add(model);
-			return Json("success");
+			var newModel = await _studentService.Add(model);
+			return Json(newModel);
 		}
 
 		[HttpPut]
 		public async Task<IActionResult> Update([FromBody] Student model) {
-			await _studentService.Update(model);
-			return Json("success");
+			var newModel = await _studentService.Update(model);
+			return Json(newModel);
 		}
 
 		[HttpDelete]
