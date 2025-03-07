@@ -1,9 +1,10 @@
 ﻿"use strict"
-import { StudentViewComponent } from "./components/student-view.js"
 import { HomeComponent } from "./components/home.js"
+import { StudentCreateComponent } from "./components/student-create.js"
+import { StudentListComponent } from "./components/student-list.js"
+import { StudentViewComponent } from "./components/student-view.js"
 import { html } from "./html.js"
 import { StudentService } from "./services/student-service.js"
-import { StudentListComponent } from "./components/student-list.js"
 
 const template = html`
 <header>
@@ -67,6 +68,8 @@ function getPage(path) {
 		loadPageContent(new HomeComponent(), path)
 	else if (path.startsWith("/students"))
 		loadPageContent(new StudentListComponent(new StudentService()), path)
+	else if (path.startsWith("/student/create"))
+		loadPageContent(new StudentCreateComponent(new StudentService()), path)
 	else if (path.startsWith("/student/"))
 		loadPageContent(new StudentViewComponent(new StudentService()), path)
 	else

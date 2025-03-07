@@ -12,7 +12,7 @@ export class StudentService {
 	}
 
 	create(student) {
-		return fetch(`/api/student/create`, {
+		return fetch(`/api/student/add`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

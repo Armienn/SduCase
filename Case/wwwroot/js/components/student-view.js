@@ -60,7 +60,7 @@ export class StudentViewComponent extends Component {
 		this.l("name").textContent = this.student.name
 		this.l("email").textContent = this.student.email
 		this.l("campus").textContent = this.student.campus
-		this.l("course-list").innerHTML = this.student.courses.map(this.courseEntry).join()
+		this.l("course-list").innerHTML = this.student.courses.map(this.courseEntry).join("")
 	}
 
 	courseEntry = (course) => {
