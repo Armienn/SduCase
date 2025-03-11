@@ -47,6 +47,8 @@ window.navigation.addEventListener("navigate", (event) => {
 
 	const url = new URL(event.destination.url)
 	// TODO: don't intercept outbound navigation
+	if (url.pathname.startsWith("/api/"))
+		return
 	event.intercept({
 		handler() {
 			getPage(url.pathname)

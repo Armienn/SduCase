@@ -5,7 +5,10 @@ import { StudentListEntryComponent } from "./student-list-entry.js"
 
 const template = html`
 <h1>Studerende</h1>
-<a href="/student/create" class="btn btn-primary mb-3">Tilføj student</a>
+<div class="d-flex justify-content-start mb-3">
+	<a href="/student/create" class="btn btn-primary me-2">Tilføj student</a>
+	<a href="/api/student/getall/students.json" class="btn btn-primary">Eksportér liste</a>
+</div>
 <table class="table table-striped table-hover">
 	<thead class="thead-dark">
 		<tr>
